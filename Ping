@@ -1,1 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Matrix</title>
+<style>
+html,body{
+    margin:0;
+    overflow:hidden;
+    background:black;
+}
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+}
+h1{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    color:red;
+    font-size:60px;
+    font-family:Arial,sans-serif;
+    text-shadow:0 0 20px red;
+    z-index:10;
+}
+</style>
+</head>
+<body>
 
+<canvas id="c"></canvas>
+<h1>ТЕБЯ ВЗЛОМАЛИ</h1>
+
+<script>
+const canvas=document.getElementById("c");
+const ctx=canvas.getContext("2d");
+
+canvas.width=innerWidth;
+canvas.height=innerHeight;
+
+const chars="01アイウエオカキクケコサシスセソABCDEFGHIJKLMNOPQRSTUVWXYZ";
+const size=18;
+const cols=Math.floor(canvas.width/size);
+const drops=Array(cols).fill(1);
+
+function draw(){
+    ctx.fillStyle="rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle="#00ff00";
+    ctx.font=size+"px monospace";
+
+    for(let i=0;i<drops.length;i++){
+        const text=chars[Math.floor(Math.random()*chars.length)];
+        ctx.fillText(text,i*size,drops[i]*size);
+
+        if(drops[i]*size>canvas.height && Math.random()>0.975){
+            drops[i]=0;
+        }
+        drops[i]++;
+    }
+}
+
+setInterval(draw,33);
+
+onresize=()=>{
+    canvas.width=innerWidth;
+    canvas.height=innerHeight;
+};
+</script>
+
+</body>
+</html>
